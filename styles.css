@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(71, 71, 99);
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black;
+    
+}
+
+.weather-info {
+    background-color: clear;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+    color: white;
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px black;
+    border: none;
+}
+
+.weather-now {
+    padding: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    overflow-x: scroll;
+    scrollbar-width: none;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+    font-weight: light;
+}
+
+
+
+
+
