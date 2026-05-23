@@ -25,7 +25,7 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}
 fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`)
   .then((res) => res.json())
   .then((json) => {
-    console.log(json);
+    console.log(json.list);
     weather = json.list
     weather.forEach((item) => {
       loadWeatherNow(item)
@@ -33,6 +33,18 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey
 
     // loadWeatherNow(json.list)
   });
+
+  fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`)
+  .then((res) => res.json())
+  .then((json) => {
+    console.log(json)
+    const dailyForeCasts = json.list.filter((item) => item.dt_txt.includes("12:00:00"))
+    console.log(dailyForeCasts)
+    dailyForeCasts.forEach((item) => {
+        loadForecast(item)
+
+    })
+  })
 
 function loadWeather(json) {
    console.log(json)
@@ -48,16 +60,31 @@ function loadWeather(json) {
    weatherHigh.innerText = `H: ${json.main.temp_min}° L: ${json.main.temp_max}° `
 }
 
+function timeConverter(time) {
+    if (time == 0) {
+    return 12 + "am"
+   }
+   else if (time > 12) {
+    return time - 12 + "pm"
+   } else {
+   return String(time).slice(1) + "am"
+   }
+}
+
 function loadWeatherNow(weather) {
-    console.log(weather)
-    console.log(weather.weather[0].icon)
+    // console.log(weather)
+    // console.log(weather.dt_txt.split(" ")[1])
+    // console.log(weather.weather[0].icon)
+   let firsttime = weather.dt_txt.split(" ")[1].split(":")[0]
+   let time = timeConverter(firsttime)
+//  console.log(time)
    let iconCode = weather.weather[0].icon
 
     let weatherNow = document.getElementById("weather-now")
     let card = document.createElement("div")
     card.className = "card"
-    let time = document.createElement("p")
-    time.innerText = "hi"
+    let timetext = document.createElement("p")
+    timetext.innerText = time
     let icon = document.createElement("icon")
     let temp = document.createElement("p")
     temp.innerText = `${weather.main.temp}°`
@@ -67,11 +94,16 @@ function loadWeatherNow(weather) {
     iconimage.alt = "image"
 
 
-    card.appendChild(time)
+    card.appendChild(timetext)
     card.appendChild(iconimage)
     card.appendChild(temp)
     weatherNow.appendChild(card)
 }
 
+
+function loadForecast(item) {
+console.log(item)
+
+}
 
 })

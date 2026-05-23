@@ -7,7 +7,7 @@ body {
     height: 100%;
     width: 100%;
     background-color: rgb(71, 71, 99);
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'ariel';
     color: black;
     
 }
@@ -32,7 +32,6 @@ body {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    
     overflow-x: scroll;
     scrollbar-width: none;
     width: 100%;
@@ -44,7 +43,20 @@ body {
     justify-content: space-around;
     align-items: center;
     color: white;
-    font-weight: light;
+    font-weight: 100;
+    background-color: rgba(240, 248, 255, 0.7);;
+    
+}
+
+.forecast {
+    /* display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%; */
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    /* grid-template-rows: repeat(11, 50px); */
+
 }
 
 
