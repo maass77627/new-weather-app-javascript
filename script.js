@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-// const apiKey = '61337b4eb24f4830a75191505262903';
+
 const apiKey = 'd61f326a8cc0ef57c9f7a059b84dd0d5'
 
 let city = 'Austin';
 
 console.log("dom loaded")
 
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`)
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
 .then((res) => {
     console.log(res.status)
    return res.json()
@@ -47,8 +47,6 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey
   })
 
 function loadWeather(json) {
-   console.log(json)
-   console.log(json.name, json.main.temp, json.weather.description)
    let weatherInfo = document.getElementById("weather-info")
    let weatherTitle = document.getElementById("weather-info-title")
    weatherTitle.textContent = json.name
@@ -57,7 +55,7 @@ function loadWeather(json) {
    let weatherDesc = document.getElementById("weather-info-desc")
    weatherDesc.innerText = json.weather[0].description
    let weatherHigh = document.getElementById("weather-info-high")
-   weatherHigh.innerText = `H: ${json.main.temp_min}° L: ${json.main.temp_max}° `
+   weatherHigh.innerText = `H: ${String(json.main.temp_min).slice(0,-3)}° L: ${String(json.main.temp_max).slice(0, -3)}° `
 }
 
 function timeConverter(time) {
@@ -72,26 +70,21 @@ function timeConverter(time) {
 }
 
 function loadWeatherNow(weather) {
-    // console.log(weather)
-    // console.log(weather.dt_txt.split(" ")[1])
-    // console.log(weather.weather[0].icon)
    let firsttime = weather.dt_txt.split(" ")[1].split(":")[0]
    let time = timeConverter(firsttime)
-//  console.log(time)
    let iconCode = weather.weather[0].icon
-
-    let weatherNow = document.getElementById("weather-now")
-    let card = document.createElement("div")
-    card.className = "card"
-    let timetext = document.createElement("p")
-    timetext.innerText = time
-    let icon = document.createElement("icon")
-    let temp = document.createElement("p")
-    temp.innerText = `${weather.main.temp}°`
-    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-    const iconimage = document.createElement("img")
-    iconimage.src = iconUrl
-    iconimage.alt = "image"
+   let weatherNow = document.getElementById("weather-now")
+   let card = document.createElement("div")
+   card.className = "card"
+   let timetext = document.createElement("p")
+   timetext.innerText = time
+   let icon = document.createElement("icon")
+   let temp = document.createElement("p")
+   temp.innerText = `${weather.main.temp}°`
+   const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+   const iconimage = document.createElement("img")
+   iconimage.src = iconUrl
+   iconimage.alt = "image"
 
 
     card.appendChild(timetext)
