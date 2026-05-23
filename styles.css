@@ -44,22 +44,33 @@ body {
     align-items: center;
     color: white;
     font-weight: 100;
-    background-color: rgba(240, 248, 255, 0.7);;
+    background-color: rgba(240, 248, 255, 0.7);
     
 }
 
 .forecast {
-    /* display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%; */
+    background-color: aquamarine;
+    height: auto;
+    width: 100%; 
     display: grid;
-    grid-template-columns: repeat(5, 100px);
+    /* grid-template-columns: repeat(5, 302px); */
     /* grid-template-rows: repeat(11, 50px); */
-
+    border: 2px solid black; 
 }
 
 
+.forecast div {
+    border: 1px solid black;
+}
 
+.forecast-card {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* * {
+outline: 1px solid red;
+} */
 
 

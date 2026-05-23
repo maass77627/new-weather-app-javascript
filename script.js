@@ -78,7 +78,7 @@ function loadWeatherNow(weather) {
    card.className = "card"
    let timetext = document.createElement("p")
    timetext.innerText = time
-   let icon = document.createElement("icon")
+//    let icon = document.createElement("icon")
    let temp = document.createElement("p")
    temp.innerText = `${weather.main.temp}°`
    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
@@ -96,6 +96,33 @@ function loadWeatherNow(weather) {
 
 function loadForecast(item) {
 console.log(item)
+// item.main.temp_min
+// item.main.temp_max
+let iconCode = item.weather[0].icon
+// console.log(new Date(item.dt_txt.split(" ")[0]))
+let grid = document.getElementById("forecast")
+let date = new Date(item.dt_txt.split(" ")[0])
+console.log(date.toLocaleDateString([],{weekday: "short"}))
+let day = date.toLocaleDateString([],{weekday: "short"})
+let card = document.createElement("div")
+card.className = "forecast-card"
+let daytext = document.createElement("p")
+daytext.innerText = day
+let lowtext = document.createElement("p")
+lowtext.innerText = item.main.temp_min
+let hightext = document.createElement("p")
+hightext.innerText = item.main.temp_max
+const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+const iconimage = document.createElement("img")
+   iconimage.src = iconUrl
+   iconimage.alt = "image"
+card.appendChild(daytext)
+card.appendChild(iconimage)
+card.appendChild(lowtext)
+card.appendChild(hightext)
+grid.appendChild(card)
+
+
 
 }
 
