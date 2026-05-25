@@ -57,12 +57,7 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey
     })
   })
 
-//   fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`)
-//   .then((res) => res.json())
-//   .then((json) => {
-//     console.log(json)
-//     loadAirQuality(json)
-//   })
+
 
 function loadWeather(json) {
    let weatherInfo = document.getElementById("weather-info")
