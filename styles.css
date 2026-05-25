@@ -87,6 +87,11 @@ body {
     
 }
 
+.air-quality {
+    width: 100%;
+    height: auto;
+}
+
 /* * {
 outline: 1px solid red;
 } */
@@ -94,6 +99,6 @@ outline: 1px solid red;
 @media (max-width: 800px) { 
 .forecast { 
     background-color: yellow; 
-grid-template-columns: 200px; 
+    grid-template-columns: 200px; 
 } 
  }

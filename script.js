@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
 const apiKey = 'd61f326a8cc0ef57c9f7a059b84dd0d5'
 
 let city = 'Austin';
-
+let lat
+let lon
 console.log("dom loaded")
 
 fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
@@ -16,6 +17,17 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}
     console.log(json.weather)
     console.log(json.weather[0])
    loadWeather(json)
+   lat = json.coord.lat
+   lon = json.coord.lon
+
+
+    fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`)
+  .then((res) => res.json())
+  .then((json) => {
+    console.log(json)
+    loadAirQuality(json)
+  })
+   
 })
 .catch((error) => {
     console.error(error)
@@ -44,6 +56,13 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey
 
     })
   })
+
+//   fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`)
+//   .then((res) => res.json())
+//   .then((json) => {
+//     console.log(json)
+//     loadAirQuality(json)
+//   })
 
 function loadWeather(json) {
    let weatherInfo = document.getElementById("weather-info")
@@ -128,6 +147,19 @@ card.appendChild(lowtext)
 card.appendChild(tempbar)
 card.appendChild(hightext)
 grid.appendChild(card)
+}
+
+
+function loadAirQuality(data) {
+    console.log(data)
+    console.log(data.list[0].main.aqi)
+    let airquality = data.list[0].main.aqi
+    let p = document.getElementById("air-num")
+    p.innerText = airquality
+    let airsent = document.getElementById("air-sent")
+    airsent.innerText = `Air quality index is ${airquality}, which is similar to yesterday at about this time.`
+    
+
 }
 
 
