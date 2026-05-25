@@ -92,10 +92,17 @@ function loadWeatherNow(weather) {
 
 function loadForecast(item) {
 console.log(item)
+
+  let tempmax =  item.main.temp_max
 let tempbar = document.createElement("div")
 tempbar.className = "tempbar"
 // tempbar.appendChild(fillcolor)
 let fillcolor = document.createElement("div")
+if(tempmax < 70) {
+    fillcolor.style.backgroundColor = "lightblue"
+} else {
+    fillcolor.style.backgroundColor = "lightcoral"
+}
 fillcolor.className = "fillcolor"
 tempbar.appendChild(fillcolor)
 let iconCode = item.weather[0].icon
@@ -122,5 +129,7 @@ card.appendChild(tempbar)
 card.appendChild(hightext)
 grid.appendChild(card)
 }
+
+
 
 })

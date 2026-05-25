@@ -76,6 +76,7 @@ body {
     height: 30%;
     width: 30%;
     border-radius: 25px;
+    padding: 5px;
 }
 
 .fillcolor {
@@ -83,6 +84,7 @@ body {
     width: 70%;
     background-color: lightblue;
     border-radius: 25px;
+    
 }
 
 /* * {
