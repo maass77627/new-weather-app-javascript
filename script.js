@@ -31,7 +31,6 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey
       loadWeatherNow(item)
     })
 
-    // loadWeatherNow(json.list)
   });
 
   fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`)
@@ -78,15 +77,12 @@ function loadWeatherNow(weather) {
    card.className = "card"
    let timetext = document.createElement("p")
    timetext.innerText = time
-//    let icon = document.createElement("icon")
    let temp = document.createElement("p")
-   temp.innerText = `${weather.main.temp}°`
+   temp.innerText = `${parseInt(weather.main.temp)}°`
    const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
    const iconimage = document.createElement("img")
    iconimage.src = iconUrl
    iconimage.alt = "image"
-
-
     card.appendChild(timetext)
     card.appendChild(iconimage)
     card.appendChild(temp)
@@ -96,10 +92,13 @@ function loadWeatherNow(weather) {
 
 function loadForecast(item) {
 console.log(item)
-// item.main.temp_min
-// item.main.temp_max
+let tempbar = document.createElement("div")
+tempbar.className = "tempbar"
+// tempbar.appendChild(fillcolor)
+let fillcolor = document.createElement("div")
+fillcolor.className = "fillcolor"
+tempbar.appendChild(fillcolor)
 let iconCode = item.weather[0].icon
-// console.log(new Date(item.dt_txt.split(" ")[0]))
 let grid = document.getElementById("forecast")
 let date = new Date(item.dt_txt.split(" ")[0])
 console.log(date.toLocaleDateString([],{weekday: "short"}))
@@ -109,9 +108,9 @@ card.className = "forecast-card"
 let daytext = document.createElement("p")
 daytext.innerText = day
 let lowtext = document.createElement("p")
-lowtext.innerText = item.main.temp_min
+lowtext.innerText = parseInt(item.main.temp_min) + "°"
 let hightext = document.createElement("p")
-hightext.innerText = item.main.temp_max
+hightext.innerText = parseInt(item.main.temp_max) + "°"
 const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
 const iconimage = document.createElement("img")
    iconimage.src = iconUrl
@@ -119,11 +118,9 @@ const iconimage = document.createElement("img")
 card.appendChild(daytext)
 card.appendChild(iconimage)
 card.appendChild(lowtext)
+card.appendChild(tempbar)
 card.appendChild(hightext)
 grid.appendChild(card)
-
-
-
 }
 
 })
