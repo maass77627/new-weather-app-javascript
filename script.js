@@ -153,12 +153,31 @@ grid.appendChild(card)
 function loadAirQuality(data) {
     console.log(data)
     console.log(data.list[0].main.aqi)
+    
     let airquality = data.list[0].main.aqi
+
     let p = document.getElementById("air-num")
     p.innerText = airquality
     let airsent = document.getElementById("air-sent")
     airsent.innerText = `Air quality index is ${airquality}, which is similar to yesterday at about this time.`
     
+    let quality
+
+if (airquality === 1) {
+    quality = "Good"
+} else if (airquality === 2) {
+    quality = "Fair"
+} else if (airquality === 3) {
+    quality = "Moderate"
+} else if (airquality === 4) {
+    quality = "Poor"
+} else {
+    quality = "Very Poor"
+}
+
+
+let airword = document.getElementById("air-word")
+    airword.innerText = quality
 
 }
 

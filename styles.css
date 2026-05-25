@@ -87,9 +87,37 @@ body {
     
 }
 
+.air-num {
+color: white;
+font-size: 200%;
+font-weight: bolder;
+}
+
+.air-word {
+    font-size: 100%;
+    font-weight: bold;
+}
+
 .air-quality {
+    color: white;
     width: 100%;
     height: auto;
+    background-color: rgb(185, 185, 208);
+}
+
+.temp-bar-two {
+    width: 100%;
+    height: 20px;
+    background-color: aliceblue;
+    border-radius: 25px;
+
+}
+
+.temp-bar-two-fill {
+    width: 100%;
+    height: 100%;
+    
+   background: linear-gradient(to right, #00c6ff, #0072ff); */
 }
 
 /* * {
