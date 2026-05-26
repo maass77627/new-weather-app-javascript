@@ -137,6 +137,11 @@ font-weight: bolder;
     #7e0023   ); 
 }
 
+.city-search {
+    background-color: white;
+    border-radius: 25px;
+}
+
 /* * {
 outline: 1px solid red;
 } */

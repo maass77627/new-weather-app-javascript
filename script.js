@@ -11,13 +11,45 @@ const state = {
     city: "Austin",
     currentWeather: null,
     coords: null,
-    forecast: [],
+    hourlyForecast: [],
+    dailyForecast: [],
     airQuality: null
 }
+
+let button = document.getElementById("submit")
+button.addEventListener("click", () => {
+let input = document.getElementById("city-search")
+console.log(input.value)
+city = input.value
+fetchWeather(city)
+})
+
+
+
 
 
 
 console.log("dom loaded")
+
+
+// function fetchWeather(data) {
+
+// fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
+// .then((res) => {
+//     console.log(res.status)
+//    return res.json()
+// })
+// .then((json) => {
+//     console.log(json)
+// })
+
+// loadWeather()
+
+// }
+
+
+
+function fetchWeather(city) {
 
 fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
 .then((res) => {
@@ -45,10 +77,22 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}
 
     loadWeather()
 
+fetchForeCast()
+fetchAirQuality()
+fetchWeatherNow()
 
 
+   
+})
+.catch((error) => {
+    console.error(error)
+})
 
-    fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${state.coords.lat}&lon=${state.coords.lon}&appid=${apiKey}`)
+}
+
+
+function fetchAirQuality() {
+     fetch(`https://api.openweathermap.org/data/2.5/air_pollution?lat=${state.coords.lat}&lon=${state.coords.lon}&appid=${apiKey}`)
   .then((res) => res.json())
   .then((json) => {
     console.log(json)
@@ -58,13 +102,9 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}
         
     loadAirQuality()
   })
-   
-})
-.catch((error) => {
-    console.error(error)
-})
+}
 
-
+function fetchWeatherNow() {
 fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`)
   .then((res) => res.json())
   .then((json) => {
@@ -73,6 +113,10 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey
      loadWeatherNow()
 
   });
+
+}
+
+  function fetchForeCast() {
 
   fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`)
   .then((res) => res.json())
@@ -84,6 +128,9 @@ fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey
     
     loadForecast()
   })
+}
+
+fetchWeather(city)
 
 
 
