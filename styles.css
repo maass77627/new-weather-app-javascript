@@ -11,9 +11,7 @@ body {
     color: black;
      background-image: url("./images/partlycloudy.webp");
      background-size: 100%;
-    /* background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; */
+    animation: slowPan 20s ease-in-out infinite alternate;
     
 }
 
@@ -37,6 +35,7 @@ body {
     /* opacity: 0.7;
     background-color: grey; */
     /* border: 2px solid black; */
+    box-shadow: 0px 0px 10px black;
     padding: 50px;
     display: flex;
     justify-content: space-around;
@@ -110,6 +109,7 @@ font-weight: bolder;
 }
 
 .air-quality {
+    box-shadow: 0px 0px 10px black;
    margin-top: 20px;
     color: white;
     width: 100%;
@@ -142,8 +142,18 @@ outline: 1px solid red;
 } */
 
 @media (max-width: 800px) { 
-.forecast { 
-    background-color: yellow; 
-    grid-template-columns: 200px; 
-} 
+/* .forecast { 
+    /* background-color: yellow;  */
+    /* grid-template-columns: 200px;  */
+/* }   */
  }
+
+
+ @keyframes slowPan {
+    from {
+        background-position: center top;
+    }
+    to {
+        background-position: center bottom;
+    }
+}
