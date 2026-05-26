@@ -8,12 +8,14 @@ let lon
 
 
 const state = {
+    currentWeather: null,
     city: "Austin",
     currentWeather: null,
     coords: null,
     hourlyForecast: [],
     dailyForecast: [],
-    airQuality: null
+    airQuality: null,
+    savedCities: []
 }
 
 let button = document.getElementById("submit")
@@ -24,6 +26,11 @@ city = input.value
 fetchWeather(city)
 })
 
+let savebutton = document.getElementById("save-city-btn")
+savebutton.addEventListener(("click"), () => {
+    state.savedCities.push(state.currentWeather)
+    console.log(state.savedCities)
+})
 
 
 
@@ -32,20 +39,6 @@ fetchWeather(city)
 console.log("dom loaded")
 
 
-// function fetchWeather(data) {
-
-// fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
-// .then((res) => {
-//     console.log(res.status)
-//    return res.json()
-// })
-// .then((json) => {
-//     console.log(json)
-// })
-
-// loadWeather()
-
-// }
 
 
 

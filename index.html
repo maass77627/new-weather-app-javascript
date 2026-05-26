@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link
+ rel="stylesheet"
+ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,11 +16,18 @@
     <button id="submit" class="submit">Submit</button>
 
     <div id="weather-info" class="weather-info">
+        <button id="save-city-btn">
+    <i class="fa-solid fa-bookmark"></i>
+    </button>
     <h3 id="weather-info-title" class="weather-info-title"></h3>
     <h2 id="weather-info-temp" class="weather-info-temp"></h2>
     <p id="weather-info-desc" class="weather-info-desc"></p>
     <p id="weather-info-high" class="weather-info-high"></p>
     </div>
+
+    <!-- <button id="save-city-btn">
+    <i class="fa-solid fa-bookmark"></i>
+    </button> -->
 
     <div id="weather-now" class="weather-now">
       
@@ -39,6 +50,14 @@
 
         </p>
        
+    </div>
+
+
+    <div class="saved-wrapper hidden">
+        <div id="saved-container" class="saved-container">
+
+        </div>
+
     </div>
 
 
