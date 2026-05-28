@@ -3,8 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
 const apiKey = 'd61f326a8cc0ef57c9f7a059b84dd0d5'
 
 let city = 'Austin';
-let lat
-let lon
+let savedWrapper = document.getElementById("saved-wrapper")
+// let lat
+// let lon
 
 
 const state = {
@@ -29,9 +30,19 @@ fetchWeather(city)
 let savebutton = document.getElementById("save-city-btn")
 savebutton.addEventListener(("click"), () => {
     state.savedCities.push(state.currentWeather)
+    loadSavedCities(state.savedCities)
     console.log(state.savedCities)
 })
 
+let toggle = document.getElementById("toggle-saved-btn")
+toggle.addEventListener(("click"), () => {
+   if (savedWrapper.classList.contains("hidden")) {
+    savedWrapper.classList.remove("hidden")
+   } else {
+    savedWrapper.classList.add("hidden")
+   }
+console.log(savedWrapper)
+})
 
 
 
@@ -46,10 +57,14 @@ function fetchWeather(city) {
 
 fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
 .then((res) => {
-    console.log(res.status)
+    // console.log(res.status)
+    if (!res.ok) {
+        throw new Error("Weather data not found")
+    }
    return res.json()
 })
 .then((json) => {
+
     
 
  state.currentWeather = {
@@ -293,6 +308,19 @@ if (airquality === 1) {
 
 let airword = document.getElementById("air-word")
     airword.innerText = quality
+
+}
+
+function loadSavedCities(savedCities) {
+    console.log(savedCities)
+    let container = document.getElementById("saved-container")
+    savedCities.forEach((city) => {
+        let card = document.createElement("div")
+        let p = document.createElement("p")
+        p.innerText = city.city
+        card.appendChild(p)
+        container.appendChild(card)
+    })
 
 }
 
