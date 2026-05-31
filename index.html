@@ -12,9 +12,15 @@
 </head>
 <body>
     <h1>Weather Application</h1>
-    <button id="toggle-saved-btn" class="toggle-saved-btn">Saved Cities</button>
-    <input id="city-search" type="text" class="city-search"></input>
-    <button id="submit" class="submit">Submit</button>
+     <button id="toggle-saved-btn" class="toggle-saved-btn">Saved Cities</button>
+    
+    <form class="search-form" id="search-form">
+        <input type="text" id="city-search" placeholder="city-search" stype="text"></input>
+       <button type="submit" id="submit" class="submit"></button>
+    </form>
+    <!-- <button id="toggle-saved-btn" class="toggle-saved-btn">Saved Cities</button> -->
+    <!-- <input id="city-search" type="text" class="city-search"></input> -->
+    <button id="submit" class="submit">Submit</button> 
 
     <div id="weather-info" class="weather-info">
         <button id="save-city-btn">

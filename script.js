@@ -7,6 +7,21 @@ let savedWrapper = document.getElementById("saved-wrapper")
 // let lat
 // let lon
 
+let form = document.getElementById("search-form")
+
+form.addEventListener("submit", (event) => {
+
+    event.preventDefault()
+
+    let input =
+        document.getElementById("city-search")
+
+    city = input.value
+
+    fetchWeather(city)
+
+})
+
 
 const state = {
     currentWeather: null,
@@ -19,13 +34,13 @@ const state = {
     savedCities: []
 }
 
-let button = document.getElementById("submit")
-button.addEventListener("click", () => {
-let input = document.getElementById("city-search")
-console.log(input.value)
-city = input.value
-fetchWeather(city)
-})
+// let button = document.getElementById("submit")
+// button.addEventListener("click", () => {
+// let input = document.getElementById("city-search")
+// console.log(input.value)
+// city = input.value
+// fetchWeather(city)
+// })
 
 let savebutton = document.getElementById("save-city-btn")
 savebutton.addEventListener(("click"), () => {
@@ -316,6 +331,7 @@ function loadSavedCities(savedCities) {
     let container = document.getElementById("saved-container")
     savedCities.forEach((city) => {
         let card = document.createElement("div")
+        card.className = "city"
         let p = document.createElement("p")
         p.innerText = city.city
         card.appendChild(p)
