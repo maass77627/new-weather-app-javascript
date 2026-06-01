@@ -34,17 +34,14 @@ const state = {
     savedCities: []
 }
 
-// let button = document.getElementById("submit")
-// button.addEventListener("click", () => {
-// let input = document.getElementById("city-search")
-// console.log(input.value)
-// city = input.value
-// fetchWeather(city)
-// })
 
 let savebutton = document.getElementById("save-city-btn")
 savebutton.addEventListener(("click"), () => {
+    if (!state.savedCities.includes(state.currentWeather)){
     state.savedCities.push(state.currentWeather)
+    } else {
+        null
+    }
     loadSavedCities(state.savedCities)
     console.log(state.savedCities)
 })
@@ -329,6 +326,7 @@ let airword = document.getElementById("air-word")
 function loadSavedCities(savedCities) {
     console.log(savedCities)
     let container = document.getElementById("saved-container")
+    container.innerHTML = ""
     savedCities.forEach((city) => {
         let card = document.createElement("div")
         card.className = "city"
