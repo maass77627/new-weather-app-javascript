@@ -13,14 +13,15 @@ form.addEventListener("submit", (event) => {
 
     event.preventDefault()
 
-    let input =
-        document.getElementById("city-search")
+    let input = document.getElementById("city-search")
 
     city = input.value
 
     fetchWeather(city)
 
 })
+
+// localStorage.setItem("cities", JSON.stringify(state.savedCities))
 
 
 const state = {
@@ -63,52 +64,92 @@ console.log("dom loaded")
 
 
 
+async function fetchWeather(city) {
 
+  try {
 
-function fetchWeather(city) {
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
 
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
-.then((res) => {
-    // console.log(res.status)
     if (!res.ok) {
-        throw new Error("Weather data not found")
-    }
-   return res.json()
-})
-.then((json) => {
-
-    
-
- state.currentWeather = {
-        city: json.name,
-        temp: parseInt(json.main.temp),
-        description: json.weather[0].description,
-        high: parseInt(json.main.temp_max),
-        low: parseInt(json.main.temp_min),
-        icon: json.weather[0].icon,
-        hourlyForecast: [],
-        dailyForecast: []
+      throw new Error("Weather data not found")
     }
 
-     state.coords = {
-        lat: json.coord.lat,
-        lon: json.coord.lon
+    const json = await res.json()
+
+    state.currentWeather = {
+      city: json.name,
+      temp: parseInt(json.main.temp),
+      description: json.weather[0].description,
+      high: parseInt(json.main.temp_max),
+      low: parseInt(json.main.temp_min),
+      icon: json.weather[0].icon,
+      hourlyForecast: [],
+      dailyForecast: []
+    }
+
+    state.coords = {
+      lat: json.coord.lat,
+      lon: json.coord.lon
     }
 
     loadWeather()
 
-fetchForeCast()
-fetchAirQuality()
-fetchWeatherNow()
+    fetchForeCast()
+    fetchAirQuality()
+    fetchWeatherNow()
+
+  } catch (error) {
+
+    console.error(error)
+
+  }
+
+}
+
+// function fetchWeather(city) {
+
+// fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
+// .then((res) => {
+//     // console.log(res.status)
+//     if (!res.ok) {
+//         throw new Error("Weather data not found")
+//     }
+//    return res.json()
+// })
+// .then((json) => {
+
+    
+
+//  state.currentWeather = {
+//         city: json.name,
+//         temp: parseInt(json.main.temp),
+//         description: json.weather[0].description,
+//         high: parseInt(json.main.temp_max),
+//         low: parseInt(json.main.temp_min),
+//         icon: json.weather[0].icon,
+//         hourlyForecast: [],
+//         dailyForecast: []
+//     }
+
+//      state.coords = {
+//         lat: json.coord.lat,
+//         lon: json.coord.lon
+//     }
+
+//     loadWeather()
+
+// fetchForeCast()
+// fetchAirQuality()
+// fetchWeatherNow()
 
 
    
-})
-.catch((error) => {
-    console.error(error)
-})
+// })
+// .catch((error) => {
+//     console.error(error)
+// })
 
-}
+// }
 
 
 function fetchAirQuality() {
@@ -118,8 +159,19 @@ function fetchAirQuality() {
     console.log(json)
 
     state.airQuality = json.list[0].main.aqi
+      let marker = document.getElementById("marker")
+        console.log(marker)
+      
+      let positions = {
+    1: "5%",
+    2: "25%",
+    3: "50%",
+    4: "75%",
+    5: "90%"
+}
 
-        
+marker.style.left =
+    positions[state.airQuality]
     loadAirQuality()
   })
 }
@@ -237,6 +289,9 @@ function loadForecast() {
         tempbar.className = "tempbar"
 
         let fillcolor = document.createElement("div")
+        let markertwo = document.createElement("div")
+        markertwo.className = "markertwo"
+        markertwo.id = "markertwo"
 
         if (tempmax < 70) {
             fillcolor.style.backgroundColor = "lightblue"
@@ -246,6 +301,8 @@ function loadForecast() {
 
         fillcolor.className = "fillcolor"
 
+
+        fillcolor.appendChild(markertwo)
         tempbar.appendChild(fillcolor)
 
         let iconCode = item.weather[0].icon
@@ -324,17 +381,25 @@ let airword = document.getElementById("air-word")
 }
 
 function loadSavedCities(savedCities) {
-    console.log(savedCities)
-    let container = document.getElementById("saved-container")
-    container.innerHTML = ""
-    savedCities.forEach((city) => {
-        let card = document.createElement("div")
-        card.className = "city"
-        let p = document.createElement("p")
-        p.innerText = city.city
-        card.appendChild(p)
-        container.appendChild(card)
-    })
+let savebutton = document.getElementById("save-city-btn")
+
+savebutton.addEventListener("click", () => {
+
+    if (!state.savedCities.includes(state.currentWeather)) {
+
+        state.savedCities.push(state.currentWeather)
+
+        localStorage.setItem(
+            "cities",
+            JSON.stringify(state.savedCities)
+        )
+    }
+
+    loadSavedCities(state.savedCities)
+
+    console.log(state.savedCities)
+})
+   
 
 }
 
