@@ -4,24 +4,17 @@ const apiKey = 'd61f326a8cc0ef57c9f7a059b84dd0d5'
 
 let city = 'Austin';
 let savedWrapper = document.getElementById("saved-wrapper")
-// let lat
-// let lon
+
 
 let form = document.getElementById("search-form")
 
 form.addEventListener("submit", (event) => {
-
-    event.preventDefault()
-
-    let input = document.getElementById("city-search")
-
-    city = input.value
-
-    fetchWeather(city)
-
+event.preventDefault()
+ let input = document.getElementById("city-search")
+ city = input.value
+ fetchWeather(city)
 })
 
-// localStorage.setItem("cities", JSON.stringify(state.savedCities))
 
 
 const state = {
@@ -35,6 +28,11 @@ const state = {
     savedCities: []
 }
 
+const storedCities = JSON.parse(localStorage.getItem("cities") || "[]")
+
+state.savedCities = storedCities
+
+loadSavedCities(state.savedCities)
 
 let savebutton = document.getElementById("save-city-btn")
 savebutton.addEventListener(("click"), () => {
@@ -92,6 +90,8 @@ async function fetchWeather(city) {
       lon: json.coord.lon
     }
 
+    // state.savedCities = storedCities
+
     loadWeather()
 
     fetchForeCast()
@@ -106,50 +106,7 @@ async function fetchWeather(city) {
 
 }
 
-// function fetchWeather(city) {
 
-// fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
-// .then((res) => {
-//     // console.log(res.status)
-//     if (!res.ok) {
-//         throw new Error("Weather data not found")
-//     }
-//    return res.json()
-// })
-// .then((json) => {
-
-    
-
-//  state.currentWeather = {
-//         city: json.name,
-//         temp: parseInt(json.main.temp),
-//         description: json.weather[0].description,
-//         high: parseInt(json.main.temp_max),
-//         low: parseInt(json.main.temp_min),
-//         icon: json.weather[0].icon,
-//         hourlyForecast: [],
-//         dailyForecast: []
-//     }
-
-//      state.coords = {
-//         lat: json.coord.lat,
-//         lon: json.coord.lon
-//     }
-
-//     loadWeather()
-
-// fetchForeCast()
-// fetchAirQuality()
-// fetchWeatherNow()
-
-
-   
-// })
-// .catch((error) => {
-//     console.error(error)
-// })
-
-// }
 
 
 function fetchAirQuality() {
@@ -158,21 +115,8 @@ function fetchAirQuality() {
   .then((json) => {
     console.log(json)
 
-    state.airQuality = json.list[0].main.aqi
-      let marker = document.getElementById("marker")
-        console.log(marker)
-      
-      let positions = {
-    1: "5%",
-    2: "25%",
-    3: "50%",
-    4: "75%",
-    5: "90%"
-}
-
-marker.style.left =
-    positions[state.airQuality]
-    loadAirQuality()
+  state.airQuality = json.list[0].main.aqi
+  loadAirQuality()
   })
 }
 
@@ -237,7 +181,7 @@ function loadWeatherNow() {
   let weatherNow =
         document.getElementById("weather-now")
         weatherNow.innerHTML = ""
-     state.hourlyForecast.forEach((item) => {
+        state.hourlyForecast.forEach((item) => {
 
         let firsttime = item.dt_txt.split(" ")[1].split(":")[0]
 
@@ -352,7 +296,6 @@ function loadForecast() {
 
 function loadAirQuality() {
     
-    
     let airquality = state.airQuality
 
     let p = document.getElementById("air-num")
@@ -375,6 +318,21 @@ if (airquality === 1) {
 }
 
 
+  let marker = document.getElementById("marker")
+    
+    if (airquality === 1) {
+        marker.style.left = "25%"
+    } else if (airquality === 2) {
+        marker.style.left ="50%"
+    } else if (airquality === 3) {
+        marker.style.left = "75%"
+    } else if (airquality === 4) {
+        marker.style.left = "80%"
+    } else {
+        marker.style.left = "100%"
+    }
+
+
 let airword = document.getElementById("air-word")
     airword.innerText = quality
 
@@ -389,13 +347,21 @@ savebutton.addEventListener("click", () => {
 
         state.savedCities.push(state.currentWeather)
 
-        localStorage.setItem(
-            "cities",
-            JSON.stringify(state.savedCities)
-        )
+        localStorage.setItem("cities", JSON.stringify(state.savedCities))
     }
 
-    loadSavedCities(state.savedCities)
+     let savedContainer = document.getElementById("saved-container")
+      savedContainer.innerHTML = ""
+      savedCities.forEach((city) => {
+      console.log(city)
+       let div = document.createElement("div")
+       div.addEventListener("click", (city) => {loadSavedCities(city)})
+       div.className = "saved-city"
+       div.innerText = city.city
+       savedContainer.appendChild(div)
+       } )
+    
+    
 
     console.log(state.savedCities)
 })
