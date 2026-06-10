@@ -229,6 +229,8 @@ function loadForecast() {
 
         let tempmax = item.main.temp_max
 
+        console.log(tempmax)
+
         let tempbar = document.createElement("div")
         tempbar.className = "tempbar"
 
@@ -237,6 +239,11 @@ function loadForecast() {
         markertwo.className = "markertwo"
         markertwo.id = "markertwo"
 
+        
+        markertwo.style.left = `${tempmax + "%"}`
+
+       
+       
         if (tempmax < 70) {
             fillcolor.style.backgroundColor = "lightblue"
         } else {
