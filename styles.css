@@ -10,6 +10,7 @@ body {
     font-family: Arial, sans-serif;
     color: black;
      background-image: url("./images/partlycloudy.webp");
+    
      background-size: 100%;
     animation: slowPan 20s ease-in-out infinite alternate;
     
@@ -194,6 +195,9 @@ height: auto;
     border-radius: 25px;
     width: 100%;
     height: auto;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 25px;
 }
 
 
@@ -206,6 +210,13 @@ height: auto;
     align-items: center;
 
 
+}
+
+
+
+.delete {
+    width: 30%;
+    background-color: #ff7e00;
 }
 
 @media (max-width: 800px) { 

@@ -20,7 +20,6 @@ event.preventDefault()
 const state = {
     currentWeather: null,
     city: "Austin",
-    currentWeather: null,
     coords: null,
     hourlyForecast: [],
     dailyForecast: [],
@@ -36,13 +35,15 @@ loadSavedCities(state.savedCities)
 
 let savebutton = document.getElementById("save-city-btn")
 savebutton.addEventListener(("click"), () => {
-    if (!state.savedCities.includes(state.currentWeather)){
-    state.savedCities.push(state.currentWeather)
-    } else {
-        null
-    }
+    console.log(state.savedCities)
+    console.log(state.currentWeather.city)
+    if (!state.savedCities.some((city) => city.city === state.currentWeather.city))
+    {state.savedCities.push(state.currentWeather)}
+    
     loadSavedCities(state.savedCities)
     console.log(state.savedCities)
+
+    localStorage.setItem("cities", JSON.stringify(state.savedCities))
 })
 
 let toggle = document.getElementById("toggle-saved-btn")
@@ -91,7 +92,7 @@ async function fetchWeather(city) {
     }
 
     // state.savedCities = storedCities
-
+    // loadBackground()
     loadWeather()
 
     fetchForeCast()
@@ -164,6 +165,18 @@ function loadWeather() {
       `H: ${state.currentWeather.high}° L: ${state.currentWeather.low}°`
 
 }
+
+
+// function loadBackground() {
+
+//     if (state.currentWeather.description === "sunny") {
+
+//     } else if (state.currentWeather.description === rainy) {
+
+//     }
+    
+    
+// }
 
 function timeConverter(time) {
     if (time == 0) {
@@ -340,38 +353,53 @@ if (airquality === 1) {
     }
 
 
+
+   
+
 let airword = document.getElementById("air-word")
     airword.innerText = quality
 
 }
 
 function loadSavedCities(savedCities) {
-let savebutton = document.getElementById("save-city-btn")
+// let savebutton = document.getElementById("save-city-btn")
 
-savebutton.addEventListener("click", () => {
+// savebutton.addEventListener("click", () => {
+    
 
-    if (!state.savedCities.includes(state.currentWeather)) {
+    // if (!state.savedCities.includes(state.currentWeather)) {
 
-        state.savedCities.push(state.currentWeather)
+    //     state.savedCities.push(state.currentWeather)
 
-        localStorage.setItem("cities", JSON.stringify(state.savedCities))
-    }
+    //     localStorage.setItem("cities", JSON.stringify(state.savedCities))
+    // }
 
      let savedContainer = document.getElementById("saved-container")
       savedContainer.innerHTML = ""
       savedCities.forEach((city) => {
       console.log(city)
        let div = document.createElement("div")
-       div.addEventListener("click", (city) => {loadSavedCities(city)})
+       
+    //    div.addEventListener("click", () => {loadSavedCities(state.savedCities)})
        div.className = "saved-city"
        div.innerText = city.city
+       let del = document.createElement("button")
+       del.innerText = "delete"
+       del.className = "delete"
+       del.addEventListener("click", () => {
+        div.remove()
+        state.savedCities = state.savedCities.filter((savedCity) => savedCity.city !== city.city)
+        localStorage.setItem("cities", JSON.stringify(state.savedCities))
+       })
+       
+       div.appendChild(del)
        savedContainer.appendChild(div)
        } )
     
     
 
     console.log(state.savedCities)
-})
+// })
    
 
 }
