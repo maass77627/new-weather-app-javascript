@@ -92,7 +92,7 @@ async function fetchWeather(city) {
     }
 
     // state.savedCities = storedCities
-    // loadBackground()
+    loadBackground()
     loadWeather()
 
     fetchForeCast()
@@ -167,16 +167,22 @@ function loadWeather() {
 }
 
 
-// function loadBackground() {
+function loadBackground() {
+    const weather = state.currentWeather.description.toLowerCase()
+     console.log(weather)
+    if (weather.includes("sun")) {
+                document.body.style.backgroundImage = "url('./images/sunny.webp')"
+    } else if (weather.includes("rain")) {
+              document.body.style.backgroundImage = "url('./images/rainy.webp')"
+    } else if (weather.includes("cloud")) {
+        document.body.style.backgroundImage = "url('./images/partlycloudy.webp')"
 
-//     if (state.currentWeather.description === "sunny") {
-
-//     } else if (state.currentWeather.description === rainy) {
-
-//     }
+    } else if (weather.includes("snow")) {
+        document.body.style.backgroundImage = "url('./images/snowy.webp')"
+    }
     
     
-// }
+}
 
 function timeConverter(time) {
     if (time == 0) {
@@ -362,17 +368,6 @@ let airword = document.getElementById("air-word")
 }
 
 function loadSavedCities(savedCities) {
-// let savebutton = document.getElementById("save-city-btn")
-
-// savebutton.addEventListener("click", () => {
-    
-
-    // if (!state.savedCities.includes(state.currentWeather)) {
-
-    //     state.savedCities.push(state.currentWeather)
-
-    //     localStorage.setItem("cities", JSON.stringify(state.savedCities))
-    // }
 
      let savedContainer = document.getElementById("saved-container")
       savedContainer.innerHTML = ""
@@ -380,7 +375,6 @@ function loadSavedCities(savedCities) {
       console.log(city)
        let div = document.createElement("div")
        
-    //    div.addEventListener("click", () => {loadSavedCities(state.savedCities)})
        div.className = "saved-city"
        div.innerText = city.city
        let del = document.createElement("button")
@@ -399,7 +393,7 @@ function loadSavedCities(savedCities) {
     
 
     console.log(state.savedCities)
-// })
+
    
 
 }

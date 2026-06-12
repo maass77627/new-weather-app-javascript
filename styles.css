@@ -212,6 +212,13 @@ height: auto;
 
 }
 
+.title {
+    font-style: thin;
+    border-radius: 25px;
+    background-color: white;
+    padding: 10px;
+}
+
 
 
 .delete {
