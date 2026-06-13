@@ -17,6 +17,8 @@ event.preventDefault()
 
 
 
+
+
 const state = {
     currentWeather: null,
     city: "Austin",
@@ -120,6 +122,7 @@ function fetchAirQuality() {
   loadAirQuality()
   })
 }
+
 
 function fetchWeatherNow() {
 fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`)
@@ -258,10 +261,8 @@ function loadForecast() {
         markertwo.className = "markertwo"
         markertwo.id = "markertwo"
 
-        
         markertwo.style.left = `${tempmax + "%"}`
 
-       
        
         if (tempmax < 70) {
             fillcolor.style.backgroundColor = "lightblue"
@@ -374,7 +375,11 @@ function loadSavedCities(savedCities) {
       savedCities.forEach((city) => {
       console.log(city)
        let div = document.createElement("div")
-       
+       div.addEventListener("click", () => {
+        // loadSavedCities()
+        fetchWeather(city.city)
+        console.log(city)
+       })
        div.className = "saved-city"
        div.innerText = city.city
        let del = document.createElement("button")
