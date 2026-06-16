@@ -5,6 +5,17 @@ const apiKey = 'd61f326a8cc0ef57c9f7a059b84dd0d5'
 let city = 'Austin';
 let savedWrapper = document.getElementById("saved-wrapper")
 
+L.tileLayer(
+    `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=YOUR_API_KEY`,
+    {
+        opacity: 0.6
+    }
+).addTo(map);
+const map = L.map('map').setView([30.2672, -97.7431], 7);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
 
 let form = document.getElementById("search-form")
 
@@ -14,10 +25,6 @@ event.preventDefault()
  city = input.value
  fetchWeather(city)
 })
-
-
-
-
 
 const state = {
     currentWeather: null,
@@ -164,8 +171,7 @@ function loadWeather() {
    let weatherDesc = document.getElementById("weather-info-desc")
    weatherDesc.innerText = state.currentWeather.description
    let weatherHigh = document.getElementById("weather-info-high")
-    weatherHigh.innerText =
-      `H: ${state.currentWeather.high}° L: ${state.currentWeather.low}°`
+    weatherHigh.innerText = `H: ${state.currentWeather.high}° L: ${state.currentWeather.low}°`
 
 }
 
@@ -280,10 +286,7 @@ function loadForecast() {
 
         let date = new Date(item.dt_txt.split(" ")[0])
 
-        let day =
-            date.toLocaleDateString([], {
-                weekday: "short"
-            })
+        let day = date.toLocaleDateString([], {weekday: "short"})
 
         let card = document.createElement("div")
 
@@ -293,18 +296,14 @@ function loadForecast() {
         daytext.innerText = day
 
         let lowtext = document.createElement("p")
-        lowtext.innerText =
-            parseInt(item.main.temp_min) + "°"
+        lowtext.innerText = parseInt(item.main.temp_min) + "°"
 
         let hightext = document.createElement("p")
-        hightext.innerText =
-            parseInt(item.main.temp_max) + "°"
+        hightext.innerText = parseInt(item.main.temp_max) + "°"
 
-        const iconUrl =
-            `https://openweathermap.org/img/wn/${iconCode}@2x.png`
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`
 
-        const iconimage =
-            document.createElement("img")
+        const iconimage = document.createElement("img")
 
         iconimage.src = iconUrl
 
