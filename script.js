@@ -5,13 +5,14 @@ const apiKey = 'd61f326a8cc0ef57c9f7a059b84dd0d5'
 let city = 'Austin';
 let savedWrapper = document.getElementById("saved-wrapper")
 
+const map = L.map('map').setView([30.2672, -97.7431], 7);
 L.tileLayer(
     `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=YOUR_API_KEY`,
     {
         opacity: 0.6
     }
 ).addTo(map);
-const map = L.map('map').setView([30.2672, -97.7431], 7);
+// const map = L.map('map').setView([30.2672, -97.7431], 7);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
@@ -99,6 +100,11 @@ async function fetchWeather(city) {
       lat: json.coord.lat,
       lon: json.coord.lon
     }
+
+    map.setView(
+  [state.coords.lat, state.coords.lon],
+  10
+);
 
     // state.savedCities = storedCities
     loadBackground()
