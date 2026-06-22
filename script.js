@@ -7,22 +7,33 @@ let savedWrapper = document.getElementById("saved-wrapper")
 
 const map = L.map('map').setView([30.2672, -97.7431], 7);
 L.tileLayer(
-    `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=YOUR_API_KEY`,
+    `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${apiKey}`,
     {
         opacity: 0.6
     }
 ).addTo(map);
-// const map = L.map('map').setView([30.2672, -97.7431], 7);
+
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
+
+
 let form = document.getElementById("search-form")
+const input = document.getElementById("city-search")
+
+// input.addEventListener("input", (e) => { 
+//      console.log(e.target.value)
+// }) 
+
+
+
+
 
 form.addEventListener("submit", (event) => {
 event.preventDefault()
- let input = document.getElementById("city-search")
+//  let input = document.getElementById("city-search")
  city = input.value
  fetchWeather(city)
 })
@@ -37,7 +48,10 @@ const state = {
     savedCities: []
 }
 
+
+
 const storedCities = JSON.parse(localStorage.getItem("cities") || "[]")
+
 
 state.savedCities = storedCities
 
@@ -54,7 +68,10 @@ savebutton.addEventListener(("click"), () => {
     console.log(state.savedCities)
 
     localStorage.setItem("cities", JSON.stringify(state.savedCities))
+    
 })
+
+
 
 let toggle = document.getElementById("toggle-saved-btn")
 toggle.addEventListener(("click"), () => {
@@ -73,19 +90,19 @@ console.log("dom loaded")
 
 
 
-async function fetchWeather(city) {
+function fetchWeather(city) {
 
-  try {
 
-    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
-
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`)
+.then((res) => {
     if (!res.ok) {
-      throw new Error("Weather data not found")
+        throw new Error("Weather data not found")
     }
+   return res.json()
+})
+.then((json) => {
 
-    const json = await res.json()
-
-    state.currentWeather = {
+ state.currentWeather = {
       city: json.name,
       temp: parseInt(json.main.temp),
       description: json.weather[0].description,
@@ -101,12 +118,8 @@ async function fetchWeather(city) {
       lon: json.coord.lon
     }
 
-    map.setView(
-  [state.coords.lat, state.coords.lon],
-  10
-);
 
-    // state.savedCities = storedCities
+
     loadBackground()
     loadWeather()
 
@@ -114,13 +127,16 @@ async function fetchWeather(city) {
     fetchAirQuality()
     fetchWeatherNow()
 
-  } catch (error) {
-
-    console.error(error)
-
-  }
+     map.setView(
+  [state.coords.lat, state.coords.lon],
+  10
+);
+})
+.catch((error) => console.error(error))
 
 }
+
+
 
 
 
@@ -183,6 +199,7 @@ function loadWeather() {
 
 
 function loadBackground() {
+    console.log(state.currentWeather)
     const weather = state.currentWeather.description.toLowerCase()
      console.log(weather)
     if (weather.includes("sun")) {
@@ -256,10 +273,9 @@ function loadForecast() {
 
 
  let grid = document.getElementById("forecast")
-
-    grid.innerHTML = ""
-
-    state.dailyForecast.forEach((item) => {
+         grid.innerHTML = ""
+         
+         state.dailyForecast.forEach((item) => {
 
         let tempmax = item.main.temp_max
 
@@ -308,6 +324,8 @@ function loadForecast() {
         hightext.innerText = parseInt(item.main.temp_max) + "°"
 
         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`
+        console.log(iconCode)
+        //  const iconUrl = `https://openweathermap.org/payload/api/media/file/${iconCode}@2x.png`
 
         const iconimage = document.createElement("img")
 
@@ -394,13 +412,14 @@ function loadSavedCities(savedCities) {
         div.remove()
         state.savedCities = state.savedCities.filter((savedCity) => savedCity.city !== city.city)
         localStorage.setItem("cities", JSON.stringify(state.savedCities))
+       
        })
        
        div.appendChild(del)
        savedContainer.appendChild(div)
        } )
     
-    
+   
 
     console.log(state.savedCities)
 
