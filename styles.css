@@ -163,6 +163,10 @@ width: 100%;
 height: auto;
 }
 
+#save-city-btn {
+    margin-top: 30px;
+}
+
 .hidden {
     display: none;
 }
@@ -204,7 +208,7 @@ height: auto;
 
 .toggle-saved-btn {
     margin-top: 10px;
-    float: right;
+    /* float: right; */
 }
 
 

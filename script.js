@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-const apiKey = 'd61f326a8cc0ef57c9f7a059b84dd0d5'
+// const apiKey = 'd61f326a8cc0ef57c9f7a059b84dd0d5'
 
 let city = 'Austin';
 let savedWrapper = document.getElementById("saved-wrapper")
 
 const map = L.map('map').setView([30.2672, -97.7431], 7);
 L.tileLayer(
-    `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${apiKey}`,
+    `https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${API_KEY}`,
     {
         opacity: 0.6
     }
